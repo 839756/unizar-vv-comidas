@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccione una opción de filtrado"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/buttonFilterByCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ordenar por cliente"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonFilterByTelefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ordenar por teléfono"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonFilterByFecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ordenar por fecha de recogida"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonFilterByEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ordenar por estado"
+        android:textSize="18sp"/>
+
+
+</LinearLayout>

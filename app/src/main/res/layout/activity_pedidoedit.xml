@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingTop="16dp"
+        android:text="Pedido"
+        android:textColor="#3F51B5"
+        android:textSize="45sp"
+        android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:text="Nombre cliente:"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/etCustomerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:fontFamily="sans-serif-light"
+                android:hint="Introduce nombre ..."
+                android:inputType="textAutoComplete"
+                android:minHeight="@dimen/min_height"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:text="Número de teléfono:"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+                android:layout_width="163dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:fontFamily="sans-serif-light"
+                android:hint="Introduce numero ..."
+                android:inputType="number"
+                android:minHeight="@dimen/min_height"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:text="Fecha de recogida:"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/etPickupDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:fontFamily="sans-serif-light"
+                android:hint="[PULSA PARA ELEGIR]"
+                android:minHeight="@dimen/min_height"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:clickable="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:text="Añadir platos:"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btnAddDish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:layout_below="@id/etPickupDate"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="18dp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_padding"
+                android:text="Estado"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <Spinner
+                android:id="@+id/spinnerEstado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnAddDish"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="Introduce estado..."
+                android:inputType="textAutoComplete"
+                android:textSize="18sp"
+                android:entries="@array/estado_array" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio total: 33€"
+            android:layout_below="@id/spinnerEstado"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="18dp"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btnConfirmOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_padding"
+            android:background="@color/colorPrimary"
+            android:text="Guardar pedido"
+            android:textColor="@color/buttonLabel"
+            android:layout_below="@id/tvTotalPrice"
+            android:layout_alignParentBottom="true"/>
+
+
+
+
+</LinearLayout>
+
+

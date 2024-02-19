@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">T223_comidas</string>
+    <string name="title">TheCook</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Plato no guardado, faltan campos obligatorios</string>
+    <string name="add_plato">Añadir plato</string>
+    <string name="menu_delete">Eliminar Plato</string>
+    <string name="menu_edit">Editar Plato</string>
+    <string name="body">Body</string>
+    <string name="title_activity_platos">Platos</string>
+    <string-array name="estado_array">
+        <item>SOLICITADO</item>
+        <item>PREPARADO</item>
+        <item>RECOGIDO</item>
+    </string-array>
+    <string-array name="categoria_array">
+        <item>PRIMERO</item>
+        <item>SEGUNDO</item>
+        <item>POSTRE</item>
+    </string-array>
+</resources>
