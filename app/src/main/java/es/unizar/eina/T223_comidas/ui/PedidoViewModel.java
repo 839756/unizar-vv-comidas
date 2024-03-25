@@ -35,8 +35,8 @@ public class PedidoViewModel extends AndroidViewModel {
 
     public long insert(Pedido pedido) { return mRepository.insert(pedido); }
 
-    public void update(Pedido pedido) { mRepository.update(pedido); }
-    public void delete(Pedido pedido) { mRepository.delete(pedido); }
+    public int update(Pedido pedido) { return mRepository.update(pedido); }
+    public int delete(Pedido pedido) { return mRepository.delete(pedido); }
 
     public int getNumeroDePedidos() { return mRepository.getNumeroDePedidos(); }
 }

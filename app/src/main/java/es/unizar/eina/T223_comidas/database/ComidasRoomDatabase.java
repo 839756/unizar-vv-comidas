@@ -51,11 +51,11 @@ public abstract class ComidasRoomDatabase extends RoomDatabase {
                 PlatoDao daoPlato = INSTANCE.platoDao();
                 daoPlato.deleteAll();
 
-                Plato plato = new Plato("1's nombre", "1's descripcion",
-                        "SEGUNDO", 1);
+                Plato plato = new Plato("Macarrones", "Con tomate, los de toda la vida",
+                        "PRIMERO", 33);
                 daoPlato.insert(plato);
-                plato = new Plato("2's nombre", "2's descripcion",
-                        "PRIMERO", 2);
+                plato = new Plato("Helado", "Literalmente un helado",
+                        "POSTRE", 33);
                 daoPlato.insert(plato);
             });
         }
