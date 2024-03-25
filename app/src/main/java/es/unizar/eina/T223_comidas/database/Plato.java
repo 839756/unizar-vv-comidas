@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 /** Clase anotada como entidad que representa un plato y que consta de nombre, categoria,
  * descripcion y precio */
 
@@ -29,8 +31,33 @@ public class Plato {
     @ColumnInfo(name = "precio")
     private double precio;
 
+
+    @Override
+    public String toString() {
+        return "Plato{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", precio=" + precio +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plato plato = (Plato) o;
+        return id == plato.id && Double.compare(plato.precio, precio) == 0 && Objects.equals(nombre, plato.nombre) && Objects.equals(descripcion, plato.descripcion) && Objects.equals(categoria, plato.categoria);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, descripcion, categoria, precio);
+    }
+
     public Plato(@NonNull String nombre, String descripcion,
-                 @NonNull String categoria,@NonNull double precio) {
+                 @NonNull String categoria, @NonNull double precio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;

@@ -33,4 +33,8 @@ public class PlatoViewModel extends AndroidViewModel {
     public int delete(Plato plato) { return mRepository.delete(plato); }
 
     public int getNumeroDePlatos() { return mRepository.getNumeroDePlatos(); }
+
+    public PlatoRepository getPlatoRepository() {
+        return mRepository;
+    }
 }

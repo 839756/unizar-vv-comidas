@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class PlatoRepository {
 
@@ -98,24 +100,30 @@ public class PlatoRepository {
         return result[0];
     }
 
+
+    /** Obtiene el plato por id
+     * @return plato
+     */
+    public Plato getPlatoById(long id){
+        Future<Plato> plato = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.getPlatoById(id));
+
+        try {
+            return plato.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+    }
+
     /** Obtiene el numero de platos
      * @return numero de platos de la BD
      */
     public int getNumeroDePlatos() {
-        final int[] result = {0};
-        CountDownLatch latch = new CountDownLatch(1);
-
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mPlatoDao.getNumeroDePlatos();
-            latch.countDown();
-        });
+        Future<Integer> numeroDePlatos = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.getNumeroDePlatos());
 
         try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            return numeroDePlatos.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return -1;
         }
-
-        return result[0];
     }
 }
