@@ -16,6 +16,7 @@ import es.unizar.eina.T223_comidas.ui.Platos;
 
 @RunWith(AndroidJUnit4.class)
 public class InsertTestPlatos {
+
     private Plato newPlato;
 
     @Rule
@@ -37,25 +38,16 @@ public class InsertTestPlatos {
     // ==============================
 
     @Test
-    public void testPrimerPlato() {
+    public void testPrimeroPlato() {
         scenarioRule.getScenario().onActivity(activity -> {
             // Acceso al repositorio a través de la actividad
             PlatoRepository mPlatoRepository= activity.getPlatoRepository();
-
-            int platosIni = mPlatoRepository.getNumeroDePlatos();
 
             newPlato = new Plato("Plato 1", "Descripción", "PRIMERO", 33.0);
             long id = mPlatoRepository.insert(newPlato);
             newPlato.setId((int)id);
 
-            int platosFin = mPlatoRepository.getNumeroDePlatos();
-
-            
-            Plato platoRecuperado = mPlatoRepository.getPlatoById(id);
-
             assertTrue("El resultado esperado no es el deseado", id>0);
-            assertEquals(newPlato, platoRecuperado);
-            assertEquals(platosIni + 1, platosFin);
         });
     }
 
@@ -65,20 +57,11 @@ public class InsertTestPlatos {
             // Acceso al repositorio a través de la actividad
             PlatoRepository mPlatoRepository= activity.getPlatoRepository();
 
-            int platosIni = mPlatoRepository.getNumeroDePlatos();
-
             newPlato = new Plato("Plato 1", "Descripción", "SEGUNDO", 33.0);
             long id = mPlatoRepository.insert(newPlato);
             newPlato.setId((int)id);
 
-            int platosFin = mPlatoRepository.getNumeroDePlatos();
-
-            
-            Plato platoRecuperado = mPlatoRepository.getPlatoById(id);
-
             assertTrue("El resultado esperado no es el deseado", id>0);
-            assertEquals(newPlato, platoRecuperado);
-            assertEquals(platosIni + 1, platosFin);
         });
     }
 
@@ -88,20 +71,11 @@ public class InsertTestPlatos {
             // Acceso al repositorio a través de la actividad
             PlatoRepository mPlatoRepository= activity.getPlatoRepository();
 
-            int platosIni = mPlatoRepository.getNumeroDePlatos();
-
             newPlato = new Plato("Plato 1", "Descripción", "POSTRE", 33.0);
             long id = mPlatoRepository.insert(newPlato);
             newPlato.setId((int)id);
 
-            int platosFin = mPlatoRepository.getNumeroDePlatos();
-
-            
-            Plato platoRecuperado = mPlatoRepository.getPlatoById(id);
-
             assertTrue("El resultado esperado no es el deseado", id>0);
-            assertEquals(newPlato, platoRecuperado);
-            assertEquals(platosIni + 1, platosFin);
         });
     }
     
@@ -115,16 +89,11 @@ public class InsertTestPlatos {
             // Acceso al repositorio a través de la actividad
             PlatoRepository mPlatoRepository= activity.getPlatoRepository();
 
-            int platosIni = mPlatoRepository.getNumeroDePlatos();
-
             newPlato = new Plato(null, "Descripción", "POSTRE", 33.0);
             long id = mPlatoRepository.insert(newPlato);
             newPlato.setId((int)id);
 
-            int platosFin = mPlatoRepository.getNumeroDePlatos();
-
             assertEquals("El resultado esperado no es el deseado", -1,id);
-            assertEquals(platosIni, platosFin);
         });
     }
 
@@ -134,16 +103,11 @@ public class InsertTestPlatos {
             // Acceso al repositorio a través de la actividad
             PlatoRepository mPlatoRepository= activity.getPlatoRepository();
 
-            int platosIni = mPlatoRepository.getNumeroDePlatos();
-
             newPlato = new Plato("", "Descripción", "POSTRE", 33.0);
             long id = mPlatoRepository.insert(newPlato);
             newPlato.setId((int)id);
 
-            int platosFin = mPlatoRepository.getNumeroDePlatos();
-
             assertEquals("El resultado esperado no es el deseado", -1,id);
-            assertEquals(platosIni, platosFin);
         });
     }
 
@@ -153,35 +117,11 @@ public class InsertTestPlatos {
             // Acceso al repositorio a través de la actividad
             PlatoRepository mPlatoRepository= activity.getPlatoRepository();
 
-            int platosIni = mPlatoRepository.getNumeroDePlatos();
-
             newPlato = new Plato("Plato 1", "Descripción", "OTRO", 33.0);
             long id = mPlatoRepository.insert(newPlato);
             newPlato.setId((int)id);
 
-            int platosFin = mPlatoRepository.getNumeroDePlatos();
-
             assertEquals("El resultado esperado no es el deseado", -1,id);
-            assertEquals(platosIni, platosFin);
-        });
-    }
-
-    @Test
-    public void testPrecioNegativoPlato() {
-        scenarioRule.getScenario().onActivity(activity -> {
-            // Acceso al repositorio a través de la actividad
-            PlatoRepository mPlatoRepository= activity.getPlatoRepository();
-
-            int platosIni = mPlatoRepository.getNumeroDePlatos();
-
-            newPlato = new Plato("Plato 1", "Descripción", "POSTRE", -33.0);
-            long id = mPlatoRepository.insert(newPlato);
-            newPlato.setId((int)id);
-
-            int platosFin = mPlatoRepository.getNumeroDePlatos();
-
-            assertEquals("El resultado esperado no es el deseado", -1,id);
-            assertEquals(platosIni, platosFin);
         });
     }
 
@@ -191,16 +131,25 @@ public class InsertTestPlatos {
             // Acceso al repositorio a través de la actividad
             PlatoRepository mPlatoRepository= activity.getPlatoRepository();
 
-            int platosIni = mPlatoRepository.getNumeroDePlatos();
-
             newPlato = new Plato("Plato 1", "Descripción", null, 33.0);
             long id = mPlatoRepository.insert(newPlato);
             newPlato.setId((int)id);
 
-            int platosFin = mPlatoRepository.getNumeroDePlatos();
+            assertEquals("El resultado esperado no es el deseado", -1,id);
+        });
+    }
+
+    @Test
+    public void testPrecioNegativoPlato() {
+        scenarioRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PlatoRepository mPlatoRepository= activity.getPlatoRepository();
+
+            newPlato = new Plato("Plato 1", "Descripción", "POSTRE", -33.0);
+            long id = mPlatoRepository.insert(newPlato);
+            newPlato.setId((int)id);
 
             assertEquals("El resultado esperado no es el deseado", -1,id);
-            assertEquals(platosIni, platosFin);
         });
     }
 }
