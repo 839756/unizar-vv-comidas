@@ -2,11 +2,8 @@ package es.unizar.eina.T223_comidas;
 
 import static org.junit.Assert.assertEquals;
 
-import android.content.Context;
-
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -15,8 +12,6 @@ import org.junit.runner.RunWith;
 
 import es.unizar.eina.T223_comidas.database.Plato;
 import es.unizar.eina.T223_comidas.database.PlatoRepository;
-import es.unizar.eina.T223_comidas.ui.MainActivity;
-import es.unizar.eina.T223_comidas.ui.PlatoViewModel;
 import es.unizar.eina.T223_comidas.ui.Platos;
 
 @RunWith(AndroidJUnit4.class)
@@ -53,7 +48,6 @@ public class SmokeTestPlatos {
 
             assertEquals(platosIni + 1, platosFin);
         });
-
     }
 
 
@@ -71,7 +65,6 @@ public class SmokeTestPlatos {
 
             assertEquals(newPlato, platoRecuperado);
         });
-
     }
 
 }
