@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class CantidadRepository {
 
@@ -23,22 +25,13 @@ public class CantidadRepository {
      * @return un valor entero largo con el identificador del plato que se ha creado.
      */
     public long insert(Cantidad cantidad) {
-        final long[] result = {0};
-        CountDownLatch latch = new CountDownLatch(1);
-        // You must call this on a non-UI thread or your app will throw an exception. Room ensures
-        // that you're not doing any long running operations on the main thread, blocking the UI.
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mCantidadDao.insert(cantidad);
-            latch.countDown();
-        });
+        Future<Long> cantidadInsertada = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mCantidadDao.insert(cantidad));
 
-        try{
-            latch.await();
-        }catch (InterruptedException e){
-            e.printStackTrace();
+        try {
+            return cantidadInsertada.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return -1;
         }
-
-        return result[0];
     }
 
     /** Modifica una cantidad
@@ -46,20 +39,13 @@ public class CantidadRepository {
      * @return un valor entero con el numero de filas modificadas.
      */
     public int update(Cantidad cantidad) {
-        final int[] result = {0};
-        CountDownLatch latch = new CountDownLatch(1);
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mCantidadDao.update(cantidad);
-            latch.countDown();
-        });
+        Future<Integer> cantidadActualizada = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mCantidadDao.update(cantidad));
 
-        try{
-            latch.await();
-        }catch (InterruptedException e){
-            e.printStackTrace();
+        try {
+            return cantidadActualizada.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return 0;
         }
-
-        return result[0];
     }
 
     /** Elimina una cantidad
@@ -67,20 +53,13 @@ public class CantidadRepository {
      * @return un valor entero con el numero de filas eliminadas.
      */
     public int delete(Cantidad cantidad) {
-        final int[] result = {0};
-        CountDownLatch latch = new CountDownLatch(1);
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mCantidadDao.delete(cantidad);
-            latch.countDown();
-        });
+        Future<Integer> cantidadEliminada = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mCantidadDao.delete(cantidad));
 
-        try{
-            latch.await();
-        }catch (InterruptedException e){
-            e.printStackTrace();
+        try {
+            return cantidadEliminada.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return 0;
         }
-
-        return result[0];
     }
 
     /** Obtiene la lista de platos de un pedido
@@ -88,38 +67,21 @@ public class CantidadRepository {
      * @return lista de platos de un pedido.
      */
     public List<Cantidad> getPlatosByPedido(int idPedido) {
-        final List<Cantidad>[] result = new List[]{null};
-        CountDownLatch latch = new CountDownLatch(1);
-
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mCantidadDao.getPlatosByPedido(idPedido);
-            latch.countDown();
-        });
+        Future<List<Cantidad>> platosPorPedido = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mCantidadDao.getPlatosByPedido(idPedido));
 
         try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            return platosPorPedido.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
         }
-
-        return result[0];
     }
 
     /** Elimina todos los platos asociados a un pedido
      * @param idPedido
      */
     public void deletePlatosByPedido(int idPedido) {
-        CountDownLatch latch = new CountDownLatch(1);
 
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mCantidadDao.deletePlatosByPedido(idPedido);
-            latch.countDown();
-        });
+        ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mCantidadDao.deletePlatosByPedido(idPedido));
 
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
