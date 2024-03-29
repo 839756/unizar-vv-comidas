@@ -6,7 +6,10 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class PlatoRepository {
 
@@ -38,22 +41,30 @@ public class PlatoRepository {
      * @return un valor entero largo con el identificador del plato que se ha creado.
      */
     public long insert(Plato plato) {
-        final long[] result = {0};
-        CountDownLatch latch = new CountDownLatch(1);
-        // You must call this on a non-UI thread or your app will throw an exception. Room ensures
-        // that you're not doing any long running operations on the main thread, blocking the UI.
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mPlatoDao.insert(plato);
-            latch.countDown();
-        });
+        Future<Integer> numeroDePlatos = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.getNumeroDePlatos());
+        int numPlatos;
 
-        try{
-            latch.await();
-        }catch (InterruptedException e){
-            e.printStackTrace();
+        try {
+            numPlatos = numeroDePlatos.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return -1;
         }
 
-        return result[0];
+
+        if(Objects.equals(plato.getNombre(), "") ||
+                (!Objects.equals(plato.getCategoria(), "PRIMERO") && !Objects.equals(plato.getCategoria(), "SEGUNDO") &&
+                        !Objects.equals(plato.getCategoria(), "POSTRE")) || plato.getPrecio() < 0 || numPlatos >= 100){
+            return -1;
+        }else{
+            Future<Long> platoInsertado = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.insert(plato));
+
+            try {
+                return platoInsertado.get();
+            } catch (InterruptedException | ExecutionException e) {
+                return -1;
+            }
+        }
+
     }
 
     /** Modifica un plato
@@ -61,20 +72,20 @@ public class PlatoRepository {
      * @return un valor entero con el numero de filas modificadas.
      */
     public int update(Plato plato) {
-        final int[] result = {0};
-        CountDownLatch latch = new CountDownLatch(1);
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mPlatoDao.update(plato);
-            latch.countDown();
-        });
+        if(Objects.equals(plato.getNombre(), "") ||
+                (!Objects.equals(plato.getCategoria(), "PRIMERO") && !Objects.equals(plato.getCategoria(), "SEGUNDO") &&
+                        !Objects.equals(plato.getCategoria(), "POSTRE")) || plato.getPrecio() < 0){
+            return 0;
+        }else{
+            Future<Integer> platoActualizado = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.update(plato));
 
-        try{
-            latch.await();
-        }catch (InterruptedException e){
-            e.printStackTrace();
+            try {
+                return platoActualizado.get();
+            } catch (InterruptedException | ExecutionException e) {
+                return 0;
+            }
         }
 
-        return result[0];
     }
 
     /** Elimina un plato
@@ -82,40 +93,44 @@ public class PlatoRepository {
      * @return un valor entero con el numero de filas eliminadas.
      */
     public int delete(Plato plato) {
-        final int[] result = {0};
-        CountDownLatch latch = new CountDownLatch(1);
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mPlatoDao.delete(plato);
-            latch.countDown();
-        });
+        Future<Integer> platoEliminado = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.delete(plato));
 
-        try{
-            latch.await();
-        }catch (InterruptedException e){
-            e.printStackTrace();
+        try {
+            return platoEliminado.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return 0;
         }
 
-        return result[0];
+    }
+
+    public void deleteAll(){
+        ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.deleteAll());
+    };
+
+
+    /** Obtiene el plato por id
+     * @return plato
+     */
+    public Plato getPlatoById(long id){
+        Future<Plato> plato = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.getPlatoById(id));
+
+        try {
+            return plato.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
     }
 
     /** Obtiene el numero de platos
      * @return numero de platos de la BD
      */
     public int getNumeroDePlatos() {
-        final int[] result = {0};
-        CountDownLatch latch = new CountDownLatch(1);
-
-        ComidasRoomDatabase.databaseWriteExecutor.execute(() -> {
-            result[0] = mPlatoDao.getNumeroDePlatos();
-            latch.countDown();
-        });
+        Future<Integer> numeroDePlatos = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.getNumeroDePlatos());
 
         try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            return numeroDePlatos.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return -1;
         }
-
-        return result[0];
     }
 }

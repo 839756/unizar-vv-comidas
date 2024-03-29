@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import es.unizar.eina.T223_comidas.R;
+import es.unizar.eina.T223_comidas.database.PedidoRepository;
+import es.unizar.eina.T223_comidas.database.PlatoRepository;
 
 /** Pantalla principal de pedidos */
 public class Pedidos extends AppCompatActivity {
@@ -107,6 +109,10 @@ public class Pedidos extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Se ha alcanzado el máximo de pedidos",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    public PedidoRepository getPedidoRepository(){
+        return mPedidoViewModel.getPedidoRepository();
     }
 
 }

@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import es.unizar.eina.T223_comidas.R;
+import es.unizar.eina.T223_comidas.database.Plato;
+import es.unizar.eina.T223_comidas.database.PlatoRepository;
 
 /** Pantalla principal de platos */
 public class Platos extends AppCompatActivity {
@@ -103,6 +105,10 @@ public class Platos extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Se ha alcanzado el máximo de platos",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    public PlatoRepository getPlatoRepository(){
+        return mPlatoViewModel.getPlatoRepository();
     }
 
 }

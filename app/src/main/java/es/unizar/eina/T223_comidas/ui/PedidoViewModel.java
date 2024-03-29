@@ -9,6 +9,7 @@ import java.util.List;
 
 import es.unizar.eina.T223_comidas.database.Pedido;
 import es.unizar.eina.T223_comidas.database.PedidoRepository;
+import es.unizar.eina.T223_comidas.database.PlatoRepository;
 
 public class PedidoViewModel extends AndroidViewModel {
 
@@ -39,4 +40,8 @@ public class PedidoViewModel extends AndroidViewModel {
     public int delete(Pedido pedido) { return mRepository.delete(pedido); }
 
     public int getNumeroDePedidos() { return mRepository.getNumeroDePedidos(); }
+
+    public PedidoRepository getPedidoRepository() {
+        return mRepository;
+    }
 }
