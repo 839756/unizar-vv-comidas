@@ -29,7 +29,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository = activity.getPedidoRepository();
 
-            this.newPedido = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            this.newPedido = new Pedido("Pedido 1", 633333333, "24/04/2025/19:30", "SOLICITADO");
             this.id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
         });
@@ -55,7 +55,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1 mod", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1 mod", 633333333, "24/04/2025/19:30", "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -70,7 +70,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333332, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333332, "24/04/2025/19:30", "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -85,7 +85,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "23/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "23/04/2025/19:30", "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -95,12 +95,27 @@ public class UpdateTestPedidos {
     }
 
     @Test
-    public void testModEstadoPedido() {
+    public void testModEstadoPedidoRecogido() {
         scenarioRule.getScenario().onActivity(activity -> {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "RECOGIDO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2025/19:30", "RECOGIDO");
+            pedidoMod.setId((int)this.id);
+
+            int numFilMod = mPedidoRepository.update(pedidoMod);
+
+            assertEquals("El resultado esperado no es el deseado: numFilMod != 1",1, numFilMod);
+        });
+    }
+
+    @Test
+    public void testModEstadoPedidoPreparado() {
+        scenarioRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PedidoRepository mPedidoRepository= activity.getPedidoRepository();
+
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2025/19:30", "PREPARADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -119,7 +134,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido(null, 633333333, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido(null, 633333333, "24/04/2025/19:30", "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -134,7 +149,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("", 633333333, "24/04/2025/19:30", "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -149,7 +164,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633, "24/04/2025/19:30", "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -164,7 +179,23 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "22/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "21/04/2025/19:30", "SOLICITADO");
+            pedidoMod.setId((int)this.id);
+
+            int numFilMod = mPedidoRepository.update(pedidoMod);
+
+            assertEquals("El resultado esperado no es el deseado: numFilMod != 0",0, numFilMod);
+        });
+    }
+
+
+    @Test
+    public void testModHoraIncorrectaPedidoSup() {
+        scenarioRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PedidoRepository mPedidoRepository= activity.getPedidoRepository();
+
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2025/23:00", "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -174,12 +205,12 @@ public class UpdateTestPedidos {
     }
 
     @Test
-    public void testModHoraIncorrectaPedido() {
+    public void testModHoraIncorrectaPedidoInf() {
         scenarioRule.getScenario().onActivity(activity -> {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2024/18:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2025/18:30", "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -209,7 +240,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "OTRO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2025/19:30", "OTRO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);

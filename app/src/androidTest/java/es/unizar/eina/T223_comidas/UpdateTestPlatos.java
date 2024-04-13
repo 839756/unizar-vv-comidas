@@ -96,6 +96,21 @@ public class UpdateTestPlatos {
     }
 
     @Test
+    public void testModCategoriaPlatoPostre() {
+        scenarioRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PlatoRepository mPlatoRepository= activity.getPlatoRepository();
+
+            Plato platoMod = new Plato("Plato 1", "Descripción", "POSTRE", 33.0);
+            platoMod.setId((int)this.id);
+
+            int numFilMod = mPlatoRepository.update(platoMod);
+
+            assertEquals("El resultado esperado no es el deseado: numFilMod != 1",1, numFilMod);
+        });
+    }
+
+    @Test
     public void testModPrecioPlato() {
         scenarioRule.getScenario().onActivity(activity -> {
             // Acceso al repositorio a través de la actividad
