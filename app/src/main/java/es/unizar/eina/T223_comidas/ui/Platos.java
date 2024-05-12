@@ -2,6 +2,7 @@ package es.unizar.eina.T223_comidas.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,8 @@ public class Platos extends AppCompatActivity {
     private PlatoViewModel mPlatoViewModel;
 
     static final int INSERT_ID = Menu.FIRST;
+
+    static final int DELETE_ID = Menu.FIRST + 1;
 
     RecyclerView mRecyclerView;
 
@@ -55,8 +58,6 @@ public class Platos extends AppCompatActivity {
             createPlato();
         });
 
-        registerForContextMenu(mRecyclerView);
-
         ImageButton platosButton = findViewById(R.id.botonInicio1);
 
         platosButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +78,8 @@ public class Platos extends AppCompatActivity {
             }
         });
 
+        registerForContextMenu(mRecyclerView);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,6 +96,20 @@ public class Platos extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        Plato current = mAdapter.getCurrent();
+        switch (item.getItemId()) {
+            case DELETE_ID:
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Borrando " + current.getNombre(),
+                        Toast.LENGTH_LONG).show();
+                mPlatoViewModel.delete(current);
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void createPlato() {

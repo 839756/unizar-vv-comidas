@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import es.unizar.eina.T223_comidas.R;
+import es.unizar.eina.T223_comidas.database.Pedido;
 import es.unizar.eina.T223_comidas.database.PedidoRepository;
+import es.unizar.eina.T223_comidas.database.Plato;
 import es.unizar.eina.T223_comidas.database.PlatoRepository;
 
 /** Pantalla principal de pedidos */
@@ -27,6 +29,8 @@ public class Pedidos extends AppCompatActivity {
     private CantidadViewModel mCantidadViewModel;
 
     static final int INSERT_ID = Menu.FIRST;
+
+    static final int DELETE_ID = Menu.FIRST + 1;
 
     RecyclerView mRecyclerView;
 
@@ -96,6 +100,20 @@ public class Pedidos extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        Pedido current = mAdapter.getCurrent();
+        switch (item.getItemId()) {
+            case DELETE_ID:
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Borrando " + current.getCliente(),
+                        Toast.LENGTH_LONG).show();
+                mPedidoViewModel.delete(current);
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void createPedido() {

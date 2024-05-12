@@ -1,23 +1,18 @@
 package es.unizar.eina.T223_comidas.ui;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
+
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import es.unizar.eina.T223_comidas.R;
 
-class PlatoViewHolder extends RecyclerView.ViewHolder {
+class PlatoViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     private final TextView mPlatoItemView;
     private final TextView mPlatoItemView2;
 
@@ -25,6 +20,8 @@ class PlatoViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         mPlatoItemView = itemView.findViewById(R.id.textView);
         mPlatoItemView2 = itemView.findViewById(R.id.textView2);
+
+        itemView.setOnCreateContextMenuListener(this);
     }
 
     public void bind(String text1, String text2) {
@@ -39,5 +36,10 @@ class PlatoViewHolder extends RecyclerView.ViewHolder {
         return new PlatoViewHolder(view);
     }
 
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        //super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, Platos.DELETE_ID, Menu.NONE, R.string.menu_delete);
+    }
 }
 
