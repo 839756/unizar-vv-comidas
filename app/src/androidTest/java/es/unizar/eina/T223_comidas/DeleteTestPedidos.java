@@ -1,5 +1,6 @@
 package es.unizar.eina.T223_comidas;
 
+import static es.unizar.eina.T223_comidas.InsertTestPedidos.nextValidOpeningTime;
 import static org.junit.Assert.assertEquals;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -29,7 +30,7 @@ public class DeleteTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido newPedido = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            Pedido newPedido = new Pedido("Pedido 1", 633333333,  nextValidOpeningTime(), "SOLICITADO");
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
@@ -61,7 +62,7 @@ public class DeleteTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido newPedido2 = new Pedido("Pedido 2", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            Pedido newPedido2 = new Pedido("Pedido 2", 633333333,  nextValidOpeningTime(), "SOLICITADO");
             int numFilDel = mPedidoRepository.update(newPedido2);
 
             assertEquals("El resultado esperado no es el deseado: numFilDel != 0",0, numFilDel);

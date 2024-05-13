@@ -22,17 +22,6 @@ public class InsertTestPlatos {
     @Rule
     public ActivityScenarioRule<Platos> scenarioRule = new ActivityScenarioRule<>(Platos.class);
 
-    @After
-    public void tearDown(){
-
-        scenarioRule.getScenario().onActivity(activity -> {
-            // Acceso al repositorio a través de la actividad
-            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
-
-            mPlatoRepository.delete(newPlato);
-        });
-    }
-
     // ==============================
     // Clases de equivalencia válidas
     // ==============================
@@ -150,6 +139,17 @@ public class InsertTestPlatos {
             newPlato.setId((int)id);
 
             assertEquals("El resultado esperado no es el deseado", -1,id);
+        });
+    }
+
+    @After
+    public void tearDown(){
+
+        scenarioRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
+
+            mPlatoRepository.delete(newPlato);
         });
     }
 }
