@@ -1,5 +1,6 @@
 package es.unizar.eina.T223_comidas;
 
+import static es.unizar.eina.T223_comidas.InsertTestPedidos.nextValidOpeningTime;
 import static org.junit.Assert.assertEquals;
 
 import android.util.Log;
@@ -33,7 +34,7 @@ public class VolumenTest {
 
             mPedidoRepository.deleteAll();
 
-            this.newPedido = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            this.newPedido = new Pedido("Pedido 1", 633333333,  nextValidOpeningTime(), "SOLICITADO");
             this.id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
         });

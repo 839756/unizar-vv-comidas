@@ -1,5 +1,6 @@
 package es.unizar.eina.T223_comidas;
 
+import static es.unizar.eina.T223_comidas.InsertTestPedidos.nextValidOpeningTime;
 import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -10,6 +11,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Date;
 
 import es.unizar.eina.T223_comidas.database.Pedido;
 import es.unizar.eina.T223_comidas.database.PedidoRepository;
@@ -29,7 +32,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository = activity.getPedidoRepository();
 
-            this.newPedido = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            this.newPedido = new Pedido("Pedido 1", 633333333, nextValidOpeningTime(), "SOLICITADO");
             this.id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
         });
@@ -55,7 +58,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1 mod", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1 mod", 633333333, nextValidOpeningTime(), "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -70,7 +73,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333332, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333332, nextValidOpeningTime(), "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -85,7 +88,8 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "23/04/2024/19:30", "SOLICITADO");
+            Date nextWeek = new Date(new Date().getTime()+7*24*60*60*1000);
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, nextValidOpeningTime(nextWeek), "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -100,7 +104,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "RECOGIDO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, nextValidOpeningTime(), "RECOGIDO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -119,7 +123,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido(null, 633333333, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido(null, 633333333, nextValidOpeningTime(), "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -134,7 +138,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("", 633333333, nextValidOpeningTime(), "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -149,7 +153,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633, "24/04/2024/19:30", "SOLICITADO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633, nextValidOpeningTime(), "SOLICITADO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
@@ -209,7 +213,7 @@ public class UpdateTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "OTRO");
+            Pedido pedidoMod = new Pedido("Pedido 1", 633333333, nextValidOpeningTime(), "OTRO");
             pedidoMod.setId((int)this.id);
 
             int numFilMod = mPedidoRepository.update(pedidoMod);
