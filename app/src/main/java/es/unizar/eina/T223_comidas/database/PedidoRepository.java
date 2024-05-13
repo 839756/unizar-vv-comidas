@@ -65,8 +65,7 @@ public class PedidoRepository {
         int minutos = calendar.get(Calendar.MINUTE);
 
         boolean fechaNoValida = diaDeLaSemana == Calendar.MONDAY ||
-                !(horaDelDia == 19 && minutos >= 30) && !(horaDelDia >= 20 && horaDelDia < 23)
-                        &&  !(horaDelDia == 23 && minutos == 00) || fecha.compareTo(fechaActual) <= 0;
+                !(horaDelDia == 19 && minutos >= 30) && !(horaDelDia >= 20 && horaDelDia < 23) || fecha.compareTo(fechaActual) <= 0;
 
         return Objects.equals(pedido.getCliente(), "") || fechaNoValida ||
                 Integer.toString(pedido.getMovil()).length() != 9 ||

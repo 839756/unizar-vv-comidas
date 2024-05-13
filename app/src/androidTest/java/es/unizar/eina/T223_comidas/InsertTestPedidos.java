@@ -63,7 +63,9 @@ public class InsertTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
+
             newPedido = new Pedido("Pedido 1", 633333333, nextValidOpeningTime(), "SOLICITADO");
+
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
             
@@ -78,6 +80,7 @@ public class InsertTestPedidos {
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
             newPedido = new Pedido("Pedido 1", 633333333, nextValidOpeningTime(), "PREPARADO");
+
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
@@ -92,6 +95,7 @@ public class InsertTestPedidos {
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
             newPedido = new Pedido("Pedido 1", 633333333, nextValidOpeningTime(), "RECOGIDO");
+          
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
@@ -110,6 +114,7 @@ public class InsertTestPedidos {
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
             newPedido = new Pedido(null, 633333333, nextValidOpeningTime(), "SOLICITADO");
+
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
@@ -124,6 +129,7 @@ public class InsertTestPedidos {
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
             newPedido = new Pedido("", 633333333, nextValidOpeningTime(), "SOLICITADO");
+
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
@@ -138,6 +144,7 @@ public class InsertTestPedidos {
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
             newPedido = new Pedido("Pedido 1", 633, nextValidOpeningTime(), "SOLICITADO");
+
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
@@ -151,7 +158,22 @@ public class InsertTestPedidos {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            newPedido = new Pedido("Pedido 1", 633333333, "22/04/2024/19:30", "SOLICITADO");
+            newPedido = new Pedido("Pedido 1", 633333333, "21/04/2025/19:30", "SOLICITADO");
+            long id = mPedidoRepository.insert(newPedido);
+            newPedido.setId((int)id);
+
+            assertEquals("El resultado esperado no es el deseado", -1, id);
+        });
+    }
+
+
+    @Test
+    public void testHoraInvalidaPedidoSup() {
+        scenarioRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PedidoRepository mPedidoRepository= activity.getPedidoRepository();
+
+            newPedido = new Pedido("Pedido 1", 633333333, "24/04/2025/23:00", "SOLICITADO");
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
@@ -160,12 +182,12 @@ public class InsertTestPedidos {
     }
 
     @Test
-    public void testHoraInvalidaPedido() {
+    public void testHoraInvalidaPedidoInf() {
         scenarioRule.getScenario().onActivity(activity -> {
             // Acceso al repositorio a través de la actividad
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
-            newPedido = new Pedido("Pedido 1", 633333333, "24/04/2024/18:30", "SOLICITADO");
+            newPedido = new Pedido("Pedido 1", 633333333, "24/04/2025/18:30", "SOLICITADO");
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
@@ -194,6 +216,7 @@ public class InsertTestPedidos {
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
 
             newPedido = new Pedido("Pedido 1", 633333333, nextValidOpeningTime(), "OTRO");
+
             long id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
 
