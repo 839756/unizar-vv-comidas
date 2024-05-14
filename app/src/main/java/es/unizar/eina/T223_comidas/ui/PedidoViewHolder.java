@@ -38,7 +38,7 @@ class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnCreateC
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         //super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, Platos.DELETE_ID, Menu.NONE, "Eliminar pedido");
+        menu.add(Menu.NONE, Platos.DELETE_ID, Menu.NONE, "Eliminar Pedido");
     }
 
 }
