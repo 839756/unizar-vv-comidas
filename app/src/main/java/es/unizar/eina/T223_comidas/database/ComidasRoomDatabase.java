@@ -53,15 +53,6 @@ public abstract class ComidasRoomDatabase extends RoomDatabase {
 
                 PedidoDao daoPedido = INSTANCE.pedidoDao();
                 daoPedido.deleteAll();
-
-                /*
-                Plato plato = new Plato("Macarrones", "Con tomate, los de toda la vida",
-                        "PRIMERO", 33);
-                daoPlato.insert(plato);
-                plato = new Plato("Helado", "Literalmente un helado",
-                        "POSTRE", 33);
-                daoPlato.insert(plato);
-                 */
             });
 
         }

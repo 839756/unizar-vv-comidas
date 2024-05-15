@@ -15,7 +15,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "io.cucumber.android.runner.CucumberAndroidJUnitRunner"
-        //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }

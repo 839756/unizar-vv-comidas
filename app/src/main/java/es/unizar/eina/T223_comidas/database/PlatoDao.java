@@ -29,6 +29,9 @@ public interface PlatoDao {
     @Query("SELECT * FROM plato WHERE id == :id")
     Plato getPlatoById(long id);
 
+    @Query("SELECT * FROM plato WHERE nombre == :nombre")
+    Plato getPlatoByNombre(String nombre);
+
     @Query("SELECT COUNT(*) FROM plato")
     int getNumeroDePlatos();
 

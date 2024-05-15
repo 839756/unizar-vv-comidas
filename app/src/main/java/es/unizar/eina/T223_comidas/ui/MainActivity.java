@@ -9,16 +9,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import es.unizar.eina.T223_comidas.R;
+import es.unizar.eina.T223_comidas.database.PedidoRepository;
+import es.unizar.eina.T223_comidas.database.PlatoRepository;
 
 public class MainActivity extends AppCompatActivity {
+
+    private PlatoViewModel mPlatoViewModel;
+    private  PedidoViewModel mPedidoViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PlatoViewModel mPlatoViewModel = new ViewModelProvider(this).get(PlatoViewModel.class);
-        PedidoViewModel mPedidoViewModel = new ViewModelProvider(this).get(PedidoViewModel.class);
+        mPlatoViewModel = new ViewModelProvider(this).get(PlatoViewModel.class);
+        mPedidoViewModel = new ViewModelProvider(this).get(PedidoViewModel.class);
 
         Button platosButton = findViewById(R.id.button1);
 
@@ -42,4 +47,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public PedidoRepository getPedidoRepository() {
+        return mPedidoViewModel.getPedidoRepository();
+    }
+
+    public PlatoRepository getPlatoRepository() {
+        return mPlatoViewModel.getPlatoRepository();
+    }
+
 }

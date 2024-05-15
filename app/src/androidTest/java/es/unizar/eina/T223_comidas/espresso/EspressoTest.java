@@ -14,19 +14,24 @@ import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 
+import static org.junit.Assert.assertEquals;
+
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import org.junit.After;
-import org.junit.AfterClass;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 import es.unizar.eina.T223_comidas.R;
+import es.unizar.eina.T223_comidas.database.Pedido;
+import es.unizar.eina.T223_comidas.database.PedidoRepository;
+import es.unizar.eina.T223_comidas.database.Plato;
+import es.unizar.eina.T223_comidas.database.PlatoRepository;
 import es.unizar.eina.T223_comidas.ui.MainActivity;
 
 public class EspressoTest {
@@ -34,17 +39,17 @@ public class EspressoTest {
     private static ArrayList<String[]> caminos;
 
     private static int numeroPlatosInicial;
-    private static int numeroPlatos;
+    private int numeroPlatos;
 
     private static int numeroPedidosInicial;
-    private static int numeroPedidos;
+    private int numeroPedidos;
 
-    private static final String NOMBRE_PLATOS = "Test plato";
-    private static final double PRECIO_PLATO = 33.0;
-    private static final String SUFIJO_PLATO = " - " + PRECIO_PLATO + " €";
-    private static final String NOMBRE_PEDIDO = "Test pedido";
-    private static final String FECHA_PEDIDO = "23/05/2024/20:00";
-    private static final String SUFIJO_PEDIDO = " - " + FECHA_PEDIDO;
+    private final String NOMBRE_PLATOS = "Test plato";
+    private final double PRECIO_PLATO = 33.0;
+    private final String SUFIJO_PLATO = " - " + PRECIO_PLATO + " €";
+    private final String NOMBRE_PEDIDO = "Test pedido";
+    private final String FECHA_PEDIDO = "23/05/2024/20:00";
+    private final String SUFIJO_PEDIDO = " - " + FECHA_PEDIDO;
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityRule
@@ -86,47 +91,64 @@ public class EspressoTest {
 
     @Before
     public void platosYPedidosSetUp() {
-        String[] caminoCrearPlato = new String[]{"2", "13", "18", "12"};
-        while (numeroPlatos < numeroPlatosInicial) {
-            ejecutarCamino(caminoCrearPlato);
-        }
+        mActivityRule.getScenario().onActivity(activity -> {
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
+            PedidoRepository mPedidoRepository = activity.getPedidoRepository();
 
-        String[] caminoCrearPedido = new String[]{"1", "4", "9", "7"};
-        while (numeroPedidos < numeroPedidosInicial) {
-            ejecutarCamino(caminoCrearPedido);
-        }
+            mPlatoRepository.deleteAll();
+            mPedidoRepository.deleteAll();
+
+            Plato newPlato = new Plato(NOMBRE_PLATOS + " " + numeroPlatos, "Descripción", "PRIMERO", PRECIO_PLATO);
+            mPlatoRepository.insert(newPlato);
+            numeroPlatos++;
+
+            newPlato = new Plato(NOMBRE_PLATOS + " " + numeroPlatos, "Descripción", "PRIMERO", PRECIO_PLATO);
+            mPlatoRepository.insert(newPlato);
+            numeroPlatos++;
+
+            newPlato = new Plato(NOMBRE_PLATOS + " " + numeroPlatos, "Descripción", "PRIMERO", PRECIO_PLATO);
+            mPlatoRepository.insert(newPlato);
+            numeroPlatos++;
+
+            Pedido newPedido = new Pedido(NOMBRE_PEDIDO + " " + numeroPedidos, 612345678, FECHA_PEDIDO, "SOLICITADO");
+            long id = mPedidoRepository.insert(newPedido);
+            numeroPedidos++;
+
+            newPedido = new Pedido(NOMBRE_PEDIDO + " " + numeroPedidos, 612345678, FECHA_PEDIDO, "SOLICITADO");
+            id = mPedidoRepository.insert(newPedido);
+            numeroPedidos++;
+
+            newPedido = new Pedido(NOMBRE_PEDIDO + " " + numeroPedidos, 612345678, FECHA_PEDIDO, "SOLICITADO");
+            id = mPedidoRepository.insert(newPedido);
+            numeroPedidos++;
+
+        });
     }
-    //@Ignore
     @Test
     public void primerCaminoTest() {
         ejecutarCamino(caminos.get(0));
     }
 
-    //@Ignore
     @Test
     public void segundoCaminoTest() {
         ejecutarCamino(caminos.get(1));
     }
 
-    //@Ignore
     @Test
     public void tercerCaminoTest() {
         ejecutarCamino(caminos.get(2));
     }
 
-    //@Ignore
     @Test
     public void cuartoCaminoTest() {
         ejecutarCamino(caminos.get(3));
     }
 
-    //@Ignore
     @Test
     public void quintoCaminoTest() {
         ejecutarCamino(caminos.get(4));
     }
 
-    //@Ignore
     @Test
     public void sextoCaminoTest() {
         ejecutarCamino(caminos.get(5));
@@ -138,70 +160,49 @@ public class EspressoTest {
         ejecutarCamino(caminos.get(6));
     }
 
-    //@Ignore
     @Test
     public void octavoCaminoTest() {
         ejecutarCamino(caminos.get(7));
     }
 
-    //@Ignore
     @Test
     public void novenoCaminoTest() {
         ejecutarCamino(caminos.get(8));
     }
 
-    //@Ignore
     @Test
     public void decimoCaminoTest() {
         ejecutarCamino(caminos.get(9));
     }
 
-    //@Ignore
     @Test
     public void undecimoCaminoTest() {
         ejecutarCamino(caminos.get(10));
     }
 
-    //@Ignore
     @Test
     public void duodecimoCaminoTest() {
         ejecutarCamino(caminos.get(11));
     }
 
-    //@Ignore
     @Test
     public void decimotercerCaminoTest() {
         ejecutarCamino(caminos.get(12));
     }
 
-    //@Ignore
     @After
     public void tearDown(){
-        String[] caminoBorrarPlato = new String[]{"2", "14", "12"};
-        while (numeroPlatos > numeroPlatosInicial) {
-            ejecutarCamino(caminoBorrarPlato);
-        }
+        mActivityRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
+            PedidoRepository mPedidoRepository = activity.getPedidoRepository();
 
-        String[] caminoBorrarPedido = new String[]{"1", "5", "7"};
-        while (numeroPedidos > numeroPedidosInicial) {
-            ejecutarCamino(caminoBorrarPedido);
-        }
+            mPlatoRepository.deleteAll();
+            mPedidoRepository.deleteAll();
+        });
     }
 
-    @AfterClass
-    public static void cleanApp() {
-        String[] caminoBorrarPlato = new String[]{"2", "14T", "12"};
-        while (numeroPlatos > 0) {
-            ejecutarCamino(caminoBorrarPlato);
-        }
-
-        String[] caminoBorrarPedido = new String[]{"1", "5T", "7"};
-        while (numeroPedidos > 0) {
-            ejecutarCamino(caminoBorrarPedido);
-        }
-    }
-
-    private static void ejecutarCamino(String[] camino) {
+    private void ejecutarCamino(String[] camino) {
         for (String accion : camino) {
             switch (accion) {
                 case "1":
@@ -218,9 +219,6 @@ public class EspressoTest {
                     break;
                 case "5":
                     caminoEliminarPedido();
-                    break;
-                case "5T":
-                    caminoEliminarPedidoT();
                     break;
                 case "6":
                     caminoModificarPedido();
@@ -247,9 +245,6 @@ public class EspressoTest {
                 case "14":
                     caminoEliminarPlato();
                     break;
-                case "14T":
-                    caminoEliminarPlatoT();
-                    break;
                 case "15":
                     caminoOrdenarPlato();
                     break;
@@ -274,19 +269,19 @@ public class EspressoTest {
         }
     }
 
-    private static void caminoPantallaPedidos() {
+    private void caminoPantallaPedidos() {
         onView(withText("PEDIDOS")).perform(click());
     }
-    private static void caminoPantallaPlatos() {
+    private void caminoPantallaPlatos() {
         onView(withText("PLATOS")).perform(click());
     }
 
-    private static void caminoOrdenarPedido() {
+    private void caminoOrdenarPedido() {
         onView(withText("ORDENAR")).perform(click());
         onView(withText("ORDENAR POR CLIENTE")).perform(click());
     }
 
-    private static void caminoEliminarPedido() {
+    private void caminoEliminarPedido() {
         String nombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1) + SUFIJO_PEDIDO;
         onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePedido))));
         onView(withText(nombrePedido)).perform(longClick());
@@ -299,20 +294,7 @@ public class EspressoTest {
         }
     }
 
-    private static void caminoEliminarPedidoT() {
-        String nombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1) + SUFIJO_PEDIDO;
-        onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePedido))));
-        onView(withText(nombrePedido)).perform(longClick());
-
-        if (numeroPedidos > 0) {
-            onView(withText("Eliminar Pedido")).perform(click());
-            numeroPedidos--;
-        } else {
-            pressBack();
-        }
-    }
-
-    private static void caminoCrearPedido() {
+    private void caminoCrearPedido() {
         onView(withText("CREAR")).perform(click());
 
         String nombrePedido = NOMBRE_PEDIDO + " " + numeroPedidos;
@@ -321,18 +303,14 @@ public class EspressoTest {
 
         onView(withId(R.id.etPhoneNumber)).perform(replaceText("612345678"), closeSoftKeyboard());
 
-        String[] parts = FECHA_PEDIDO.split("/");
-        String formattedDate = parts[0] + "/" + parts[1] + "/" + parts[2];
-        String formattedTime = parts[3];
-
-        onView(withId(R.id.etPickupDate)).perform(replaceText(formattedDate + "/" + formattedTime), closeSoftKeyboard());
+        onView(withId(R.id.etPickupDate)).perform(replaceText(FECHA_PEDIDO), closeSoftKeyboard());
     }
 
-    private static void caminoNoConfirmarCrearPedido() {
+    private void caminoNoConfirmarCrearPedido() {
         pressBack();
     }
 
-    private static void caminoConfirmarCrearPedido() {
+    private void caminoConfirmarCrearPedido() {
         numeroPedidos++;
         onView(withId(R.id.btnConfirmOrder)).perform(click());
         onView((withText("No enviar info"))).perform(click());
@@ -343,35 +321,40 @@ public class EspressoTest {
         onView(withText(nombrePedido)).check(matches(isDisplayed()));
     }
 
-    private static void caminoModificarPedido() {
+    private void caminoModificarPedido() {
         String nombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1) + SUFIJO_PEDIDO;
 
         onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePedido))));
         onView(withText(nombrePedido)).perform(click());
 
-        String nuevoNombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1);
-
-        onView(withId(R.id.etCustomerName)).perform(replaceText(nuevoNombrePedido), closeSoftKeyboard());
+        onView(withId(R.id.spinnerEstado)).perform(click());
+        onView(withText("PREPARADO")).perform(click());
     }
 
-    private static void caminoNoConfirmarModificarPedido() {
+    private void caminoNoConfirmarModificarPedido() {
         pressBack();
     }
-    private static void caminoConfirmarModificarPedido() {
+    private void caminoConfirmarModificarPedido() {
         onView(withId(R.id.btnConfirmOrder)).perform(click());
         onView((withText("No enviar info"))).perform(click());
 
-        String nombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1) + SUFIJO_PEDIDO;
+        String nombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1);
 
-        onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePedido))));
-        onView(withText(nombrePedido)).check(matches(isDisplayed()));
+        mActivityRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PedidoRepository mPedidoRepository = activity.getPedidoRepository();
+
+            Pedido pedido = mPedidoRepository.getPedidoByNombre(nombrePedido);
+
+            assertEquals("El pedido no ha sido modificado", pedido.getEstado(),"PREPARADO");
+        });
     }
 
-    private static void caminoVolverHome() {
+    private void caminoVolverHome() {
         onView(withId(R.id.botonInicio1)).perform(click());
     }
 
-    private static void caminoEliminarPlato() {
+    private void caminoEliminarPlato() {
         String nombrePlato = NOMBRE_PLATOS + " " + (numeroPlatos - 1) + SUFIJO_PLATO;
         onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePlato))));
         onView(withText(nombrePlato)).perform(longClick());
@@ -384,25 +367,12 @@ public class EspressoTest {
         }
     }
 
-    private static void caminoEliminarPlatoT() {
-        String nombrePlato = NOMBRE_PLATOS + " " + (numeroPlatos - 1) + SUFIJO_PLATO;
-        onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePlato))));
-        onView(withText(nombrePlato)).perform(longClick());
-
-        if (numeroPlatos > 0) {
-            onView(withText("Eliminar Plato")).perform(click());
-            numeroPlatos--;
-        } else {
-            pressBack();
-        }
-    }
-
-    private static void caminoOrdenarPlato() {
+    private void caminoOrdenarPlato() {
         onView(withText("ORDENAR")).perform(click());
         onView(withText("ORDENAR POR NOMBRE")).perform(click());
     }
 
-    private static void caminoCrearPlato() {
+    private void caminoCrearPlato() {
         onView(withText("CREAR")).perform(click());
 
         String nombrePlato = NOMBRE_PLATOS + " " + numeroPlatos;
@@ -414,11 +384,11 @@ public class EspressoTest {
 
 
 
-    private static void caminoNoConfirmarCrearPlato() {
+    private void caminoNoConfirmarCrearPlato() {
         pressBack();
     }
 
-    private static void caminoConfirmarCrearPlato() {
+    private void caminoConfirmarCrearPlato() {
         numeroPlatos++;
         onView(withId(R.id.button_save)).perform(click());
 
@@ -428,27 +398,32 @@ public class EspressoTest {
         onView(withText(nombrePlato)).check(matches(isDisplayed()));
     }
 
-    private static void caminoModificarPlato() {
+    private void caminoModificarPlato() {
         String nombrePlato = NOMBRE_PLATOS + " " + (numeroPlatos - 1) + SUFIJO_PLATO;
 
         onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePlato))));
         onView(withText(nombrePlato)).perform(click());
 
-        String descripcion = NOMBRE_PLATOS + " " + (numeroPlatos - 1);
-
-        onView(withId(R.id.descPlato)).perform(replaceText(descripcion), closeSoftKeyboard());
+        onView(withId(R.id.categPlato)).perform(click());
+        onView(withText("SEGUNDO")).perform(click());
     }
 
-    private static void caminoConfirmarModificarPlato() {
+    private void caminoConfirmarModificarPlato() {
         onView(withId(R.id.button_save)).perform(click());
 
-        String nombrePlato = NOMBRE_PLATOS + " " + (numeroPlatos - 1) + SUFIJO_PLATO;
+        String nombrePlato = NOMBRE_PLATOS + " " + (numeroPlatos - 1);
 
-        onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePlato))));
-        onView(withText(nombrePlato)).check(matches(isDisplayed()));
+        mActivityRule.getScenario().onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
+
+            Plato plato = mPlatoRepository.getPlatoByNombre(nombrePlato);
+
+            assertEquals("El pedido no ha sido modificado", plato.getCategoria(),"SEGUNDO");
+        });
     }
 
-    private static void caminoNoConfirmarModificarPlato() {
+    private void caminoNoConfirmarModificarPlato() {
         pressBack();
     }
 

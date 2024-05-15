@@ -129,7 +129,7 @@ public class Pedidos extends AppCompatActivity {
         }
     }
 
-    public PedidoRepository getPedidoRepository(){
+    public PedidoRepository getPedidoRepository() {
         return mPedidoViewModel.getPedidoRepository();
     }
 

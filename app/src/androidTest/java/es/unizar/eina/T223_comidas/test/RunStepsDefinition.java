@@ -12,13 +12,22 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.junit.Assert.assertEquals;
+
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
+
 import org.junit.Rule;
 
-import io.cucumber.java.After;
+import es.unizar.eina.T223_comidas.database.Pedido;
+import es.unizar.eina.T223_comidas.database.PedidoRepository;
+import es.unizar.eina.T223_comidas.database.Plato;
+import es.unizar.eina.T223_comidas.database.PlatoRepository;
+
 import io.cucumber.java.Before;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -28,7 +37,7 @@ import es.unizar.eina.T223_comidas.R;
 import es.unizar.eina.T223_comidas.ui.MainActivity;
 
 public class RunStepsDefinition {
-    /*
+
     private int numeroPlatos;
 
     private int numeroPedidos;
@@ -40,31 +49,162 @@ public class RunStepsDefinition {
     private final String FECHA_PEDIDO = "23/05/2024/20:00";
     private final String SUFIJO_PEDIDO = " - " + FECHA_PEDIDO;
 
-     */
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
 
+    private static ActivityScenario<MainActivity> scenario;
+
+    @Before
+    public void setUpTest() {
+        scenario = ActivityScenario.launch(MainActivity.class);
+        scenario.onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
+            PedidoRepository mPedidoRepository = activity.getPedidoRepository();
+
+            mPlatoRepository.deleteAll();
+            mPedidoRepository.deleteAll();
+
+            Plato newPlato = new Plato(NOMBRE_PLATOS + " " + numeroPlatos, "Descripción", "PRIMERO", PRECIO_PLATO);
+            mPlatoRepository.insert(newPlato);
+            numeroPlatos++;
+
+            newPlato = new Plato(NOMBRE_PLATOS + " " + numeroPlatos, "Descripción", "PRIMERO", PRECIO_PLATO);
+            mPlatoRepository.insert(newPlato);
+            numeroPlatos++;
+
+            newPlato = new Plato(NOMBRE_PLATOS + " " + numeroPlatos, "Descripción", "PRIMERO", PRECIO_PLATO);
+            mPlatoRepository.insert(newPlato);
+            numeroPlatos++;
+
+            Pedido newPedido = new Pedido(NOMBRE_PEDIDO + " " + numeroPedidos, 633333333, FECHA_PEDIDO, "SOLICITADO");
+            long id = mPedidoRepository.insert(newPedido);
+            numeroPedidos++;
+
+            newPedido = new Pedido(NOMBRE_PEDIDO + " " + numeroPedidos, 633333333, FECHA_PEDIDO, "SOLICITADO");
+            id = mPedidoRepository.insert(newPedido);
+            numeroPedidos++;
+
+            newPedido = new Pedido(NOMBRE_PEDIDO + " " + numeroPedidos, 633333333, FECHA_PEDIDO, "SOLICITADO");
+            id = mPedidoRepository.insert(newPedido);
+            numeroPedidos++;
+        });
+    }
+
+    @After
+    public void tearDown() {
+        scenario = ActivityScenario.launch(MainActivity.class);
+        scenario.onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
+            PedidoRepository mPedidoRepository = activity.getPedidoRepository();
+
+            mPlatoRepository.deleteAll();
+            mPedidoRepository.deleteAll();
+        });
+    }
+
     @Given("There are {int} dishes")
     public void there_are_dishes(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
+        scenario = ActivityScenario.launch(MainActivity.class);
+        scenario.onActivity(activity -> {
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
 
+            int nPlatos = mPlatoRepository.getNumeroDePlatos();
+
+            assertEquals("No hay el número de platos indicado", int1.intValue(),  nPlatos);
+        });
     }
+
+    @Given("There are {int} orders")
+    public void there_are_orders(Integer int1 ) {
+        scenario = ActivityScenario.launch(MainActivity.class);
+        scenario.onActivity(activity -> {
+            PedidoRepository mPedidoRepository = activity.getPedidoRepository();
+
+            int nPedidos = mPedidoRepository.getNumeroDePedidos();
+
+            assertEquals("No hay el número de pedidos indicado", int1.intValue(),  nPedidos);
+        });
+    }
+
 
     @When("Add a dish")
     public void add_a_dish() {
-        // Write code here that turns the phrase above into concrete actions
+        caminoPantallaPlatos();
+        caminoCrearPlato();
+        caminoConfirmarCrearPlato();
+    }
 
+    @When("Add an order")
+    public void add_an_order( ) {
+        caminoPantallaPedidos();
+        caminoCrearPedido();
+        caminoConfirmarCrearPedido();
+    }
+
+    @When("Delete a dish")
+    public void delete_a_dish( ) {
+        caminoPantallaPlatos();
+        caminoEliminarPlato();
+    }
+
+    @When("Delete an order")
+    public void delete_an_order( ) {
+        caminoPantallaPedidos();
+        caminoEliminarPedido();
+    }
+
+    @When("Modify a dish")
+    public void modify_a_dish( ) {
+        caminoPantallaPlatos();
+        caminoModificarPlato();
+        caminoConfirmarModificarPlato();
+    }
+    @When("Modify an order")
+    public void modify_an_order( ) {
+        caminoPantallaPedidos();
+        caminoModificarPedido();
+        caminoConfirmarModificarPedido();
+    }
+    @When("Arrenge the orders")
+    public void arrenge_the_orders( ) {
+        caminoPantallaPedidos();
+        caminoOrdenarPedido();
+    }
+
+    @When("Arrenge the dishes")
+    public void arrenge_the_dishes( ) {
+        caminoPantallaPlatos();
+        caminoOrdenarPlato();
     }
 
     @Then("There should be {int} dishes")
     public void there_should_be_dishes(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
+        scenario = ActivityScenario.launch(MainActivity.class);
+        scenario.onActivity(activity -> {
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
+
+            int nPlatos = mPlatoRepository.getNumeroDePlatos();
+
+            assertEquals("No hay el número de platos indicado", int1.intValue(),  nPlatos);
+        });
 
     }
 
+    @Then("There should be {int} orders")
+    public void there_should_be_orders(Integer int1 ) {
+        scenario = ActivityScenario.launch(MainActivity.class);
+        scenario.onActivity(activity -> {
+            PedidoRepository mPedidoRepository = activity.getPedidoRepository();
 
-    /*
+            int nPedidos = mPedidoRepository.getNumeroDePedidos();
+
+            assertEquals("No hay el número de pedidos indicado", int1.intValue(), nPedidos);
+        });
+    }
+
     private void caminoPantallaPedidos() {
         onView(withText("PEDIDOS")).perform(click());
     }
@@ -74,7 +214,7 @@ public class RunStepsDefinition {
 
     private void caminoOrdenarPedido() {
         onView(withText("ORDENAR")).perform(click());
-        onView(withText("ORDENAR POR CLIENTE")).perform(click());
+        onView(withText("ORDENAR POR ESTADO")).perform(click());
     }
 
     private void caminoEliminarPedido() {
@@ -96,15 +236,7 @@ public class RunStepsDefinition {
 
         onView(withId(R.id.etPhoneNumber)).perform(replaceText("612345678"), closeSoftKeyboard());
 
-        String[] parts = FECHA_PEDIDO.split("/");
-        String formattedDate = parts[0] + "/" + parts[1] + "/" + parts[2];
-        String formattedTime = parts[3];
-
-        onView(withId(R.id.etPickupDate)).perform(replaceText(formattedDate + "/" + formattedTime), closeSoftKeyboard());
-    }
-
-    private void caminoNoConfirmarCrearPedido() {
-        pressBack();
+        onView(withId(R.id.etPickupDate)).perform(replaceText(FECHA_PEDIDO), closeSoftKeyboard());
     }
 
     private void caminoConfirmarCrearPedido() {
@@ -124,9 +256,8 @@ public class RunStepsDefinition {
         onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePedido))));
         onView(withText(nombrePedido)).perform(click());
 
-        String nuevoNombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1);
-
-        onView(withId(R.id.etCustomerName)).perform(replaceText(nuevoNombrePedido), closeSoftKeyboard());
+        onView(withId(R.id.spinnerEstado)).perform(click());
+        onView(withText("PREPARADO")).perform(click());
     }
 
     private void caminoNoConfirmarModificarPedido() {
@@ -136,14 +267,17 @@ public class RunStepsDefinition {
         onView(withId(R.id.btnConfirmOrder)).perform(click());
         onView((withText("No enviar info"))).perform(click());
 
-        String nombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1) + SUFIJO_PEDIDO;
+        String nombrePedido = NOMBRE_PEDIDO + " " + (numeroPedidos - 1);
 
-        onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePedido))));
-        onView(withText(nombrePedido)).check(matches(isDisplayed()));
-    }
+        scenario = ActivityScenario.launch(MainActivity.class);
+        scenario.onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PedidoRepository mPedidoRepository = activity.getPedidoRepository();
 
-    private void caminoVolverHome() {
-        onView(withId(R.id.botonInicio1)).perform(click());
+            Pedido pedido = mPedidoRepository.getPedidoByNombre(nombrePedido);
+
+            assertEquals("El pedido no ha sido modificado", pedido.getEstado(),"PREPARADO");
+        });
     }
 
     private void caminoEliminarPlato() {
@@ -153,24 +287,12 @@ public class RunStepsDefinition {
 
         onView(withText("Eliminar Plato")).perform(click());
         numeroPlatos--;
-    }
 
-    private void caminoEliminarPlatoT() {
-        String nombrePlato = NOMBRE_PLATOS + " " + (numeroPlatos - 1) + SUFIJO_PLATO;
-        onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePlato))));
-        onView(withText(nombrePlato)).perform(longClick());
-
-        if (numeroPlatos > 0) {
-            onView(withText("Eliminar Plato")).perform(click());
-            numeroPlatos--;
-        } else {
-            pressBack();
-        }
     }
 
     private void caminoOrdenarPlato() {
         onView(withText("ORDENAR")).perform(click());
-        onView(withText("ORDENAR POR NOMBRE")).perform(click());
+        onView(withText("ORDENAR POR CATEGORÍA")).perform(click());
     }
 
     private void caminoCrearPlato() {
@@ -181,12 +303,6 @@ public class RunStepsDefinition {
         onView(withId(R.id.nombrePlato)).perform(replaceText(nombrePlato), closeSoftKeyboard());
 
         onView(withId(R.id.precioPlato)).perform(replaceText("33"), closeSoftKeyboard());
-    }
-
-
-
-    private void caminoNoConfirmarCrearPlato() {
-        pressBack();
     }
 
     private void caminoConfirmarCrearPlato() {
@@ -205,24 +321,24 @@ public class RunStepsDefinition {
         onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePlato))));
         onView(withText(nombrePlato)).perform(click());
 
-        String descripcion = NOMBRE_PLATOS + " " + (numeroPlatos - 1);
-
-        onView(withId(R.id.descPlato)).perform(replaceText(descripcion), closeSoftKeyboard());
+        onView(withId(R.id.categPlato)).perform(click());
+        onView(withText("SEGUNDO")).perform(click());
     }
 
     private void caminoConfirmarModificarPlato() {
         onView(withId(R.id.button_save)).perform(click());
 
-        String nombrePlato = NOMBRE_PLATOS + " " + (numeroPlatos - 1) + SUFIJO_PLATO;
+        String nombrePlato = NOMBRE_PLATOS + " " + (numeroPlatos - 1);
 
-        onView(withId(R.id.recyclerview)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(nombrePlato))));
-        onView(withText(nombrePlato)).check(matches(isDisplayed()));
+        scenario = ActivityScenario.launch(MainActivity.class);
+        scenario.onActivity(activity -> {
+            // Acceso al repositorio a través de la actividad
+            PlatoRepository mPlatoRepository = activity.getPlatoRepository();
+
+            Plato plato = mPlatoRepository.getPlatoByNombre(nombrePlato);
+
+            assertEquals("El pedido no ha sido modificado", plato.getCategoria(),"SEGUNDO");
+        });
     }
-
-    private void caminoNoConfirmarModificarPlato() {
-        pressBack();
-    }
-
-     */
 
 }

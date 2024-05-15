@@ -29,6 +29,9 @@ public interface PedidoDao {
     @Query("SELECT COUNT(*) FROM pedido")
     int getNumeroDePedidos();
 
+    @Query("SELECT * FROM pedido WHERE cliente == :cliente")
+    Pedido getPedidoByNombre(String cliente);
+
     @Query("SELECT * FROM pedido ORDER BY cliente ASC")
     LiveData<List<Pedido>> getOrderedPedidosByCliente();
 

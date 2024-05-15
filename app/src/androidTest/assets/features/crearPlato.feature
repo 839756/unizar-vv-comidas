@@ -5,6 +5,6 @@ Feature: The App lets the user create a dish
   information
 
   Scenario: Create a dish
-    Given There are 0 dishes
+    Given There are 3 dishes
     When Add a dish
-    Then There should be 1 dishes
+    Then There should be 4 dishes
