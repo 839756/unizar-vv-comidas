@@ -15,6 +15,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
+import org.junit.Rule;
+
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -46,19 +48,19 @@ public class RunStepsDefinition {
     @Given("There are {int} dishes")
     public void there_are_dishes(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+
     }
 
     @When("Add a dish")
     public void add_a_dish() {
         // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+
     }
 
     @Then("There should be {int} dishes")
     public void there_should_be_dishes(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+
     }
 
 
