@@ -96,15 +96,8 @@ public class Platos extends AppCompatActivity {
     }
 
     private void createPlato() {
-        int numPlatos = mPlatoViewModel.getNumeroDePlatos();
-        if(numPlatos < 100) {
-            Intent intent = new Intent(this, PlatoEdit.class);
-            startActivity(intent);
-        }
-        else{
-            Toast.makeText(getApplicationContext(), "Se ha alcanzado el máximo de platos",
-                    Toast.LENGTH_LONG).show();
-        }
+        Intent intent = new Intent(this, PlatoEdit.class);
+        startActivity(intent);
     }
 
     public PlatoRepository getPlatoRepository(){

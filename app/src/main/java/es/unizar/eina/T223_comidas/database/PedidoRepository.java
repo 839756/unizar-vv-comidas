@@ -80,22 +80,10 @@ public class PedidoRepository {
      */
     public long insert(Pedido pedido) {
 
-        //===============================
-        //Obtención del numero de pedidos
-        //===============================
-        Future<Integer> numeroDePedidos = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPedidoDao.getNumeroDePedidos());
-        int numPedidos;
-
-        try {
-            numPedidos = numeroDePedidos.get();
-        } catch (InterruptedException | ExecutionException e) {
-            return -1;
-        }
-
         //=============================================
         //Se realizan las comprobaciones y la inserción
         //=============================================
-        if( numPedidos >= 2000 || comprobarPedido(pedido)){
+        if(comprobarPedido(pedido)){
             return -1;
         }else{
             Future<Long> pedidoInsertado = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPedidoDao.insert(pedido));
@@ -159,7 +147,4 @@ public class PedidoRepository {
             return -1;
         }
     }
-
-
-
 }

@@ -41,19 +41,9 @@ public class PlatoRepository {
      * @return un valor entero largo con el identificador del plato que se ha creado.
      */
     public long insert(Plato plato) {
-        Future<Integer> numeroDePlatos = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.getNumeroDePlatos());
-        int numPlatos;
-
-        try {
-            numPlatos = numeroDePlatos.get();
-        } catch (InterruptedException | ExecutionException e) {
-            return -1;
-        }
-
-
         if(Objects.equals(plato.getNombre(), "") ||
                 (!Objects.equals(plato.getCategoria(), "PRIMERO") && !Objects.equals(plato.getCategoria(), "SEGUNDO") &&
-                        !Objects.equals(plato.getCategoria(), "POSTRE")) || plato.getPrecio() < 0 || numPlatos >= 100){
+                        !Objects.equals(plato.getCategoria(), "POSTRE")) || plato.getPrecio() < 0){
             return -1;
         }else{
             Future<Long> platoInsertado = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.insert(plato));
