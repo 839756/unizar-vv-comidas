@@ -1,6 +1,6 @@
-package es.unizar.eina.T223_comidas.cucumber;
+package es.unizar.eina.T223_comidas.test;
 
-import cucumber.api.CucumberOptions;
+import io.cucumber.junit.CucumberOptions;
 
 @CucumberOptions(
         glue = { "es.unizar.eina.T223_comidas.test" }, tags = "~@wip" , features = { "features" }
