@@ -109,9 +109,9 @@ dependencies {
     // UI testing with Espresso
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    androidTestImplementation 'io.cucumber:cucumber-android:4.4.1'
+    androidTestImplementation 'io.cucumber:cucumber-android:7.14.0'
     // Se recomienda no actualizar la versión de io.cucumber:cucumber picocontainer
-    androidTestImplementation 'io.cucumber:cucumber-picocontainer:4.4.0'
+    androidTestImplementation 'io.cucumber:cucumber-picocontainer:7.17.0'
     androidTestUtil 'androidx.test:orchestrator:1.4.2'
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
