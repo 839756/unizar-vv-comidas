@@ -14,11 +14,8 @@ android {
         versionCode 1
         versionName "1.0"
 
-        // testInstrumentationRunner "io.cucumber.android.runner.CucumberAndroidJUnitRunner"
-
-        // testInstrumentationRunner "cucumber.api.android.CucumberAndroidJUnitRunner"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "io.cucumber.android.runner.CucumberAndroidJUnitRunner"
+        //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -108,7 +105,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     androidTestImplementation 'io.cucumber:cucumber-android:7.14.0'
-    // Se recomienda no actualizar la versión de io.cucumber:cucumber picocontainer
     androidTestImplementation 'io.cucumber:cucumber-picocontainer:7.17.0'
     androidTestUtil 'androidx.test:orchestrator:1.4.2'
 
