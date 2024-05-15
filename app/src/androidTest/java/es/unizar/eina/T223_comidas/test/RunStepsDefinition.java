@@ -11,8 +11,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
@@ -28,7 +26,7 @@ import es.unizar.eina.T223_comidas.R;
 import es.unizar.eina.T223_comidas.ui.MainActivity;
 
 public class RunStepsDefinition {
-
+    /*
     private int numeroPlatos;
 
     private int numeroPedidos;
@@ -40,36 +38,31 @@ public class RunStepsDefinition {
     private final String FECHA_PEDIDO = "23/05/2024/20:00";
     private final String SUFIJO_PEDIDO = " - " + FECHA_PEDIDO;
 
-    ActivityTestRule rule = new ActivityTestRule<>(MainActivity.class);
+     */
 
-    @Before
-    public void launchActivity() throws Exception {
-        rule.launchActivity(null);
+    @Rule
+    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
+
+    @Given("There are {int} dishes")
+    public void there_are_dishes(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
     }
 
-    @After
-    public void finishActivity() throws Exception {
-        rule.getActivity().finish();
+    @When("Add a dish")
+    public void add_a_dish() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
     }
 
-    @Given("Hay {int} platos en la aplicación")
-    public void hay_platos_en_la_aplicación(Integer int1) {
-        System.out.println("Hola");
+    @Then("There should be {int} dishes")
+    public void there_should_be_dishes(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
     }
 
-    @When("Añadir un plato")
-    public void anadir_un_plato() {
-        caminoPantallaPlatos();
-        caminoCrearPlato();
-        caminoConfirmarCrearPlato();
-        caminoVolverHome();
-    }
 
-    @Then("Hay {int} platos nuevos en la aplicación")
-    public void hay_platos_nuevos_en_la_aplicación(Integer int1) {
-        System.out.println("Adios");
-    }
-
+    /*
     private void caminoPantallaPedidos() {
         onView(withText("PEDIDOS")).perform(click());
     }
@@ -228,5 +221,6 @@ public class RunStepsDefinition {
         pressBack();
     }
 
+     */
 
 }
