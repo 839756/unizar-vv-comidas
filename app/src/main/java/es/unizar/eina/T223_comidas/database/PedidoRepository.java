@@ -77,7 +77,15 @@ public class PedidoRepository {
                             int diaPedido = calPedido.get(Calendar.DAY_OF_MONTH);
                             int diaActual = calActual.get(Calendar.DAY_OF_MONTH);
 
-                            return yearActual <= yearPedido && mesActual <= mesPedido && diaActual < diaPedido;
+                            if (yearActual < yearPedido) {
+                                return true;
+                            } else if (yearActual == yearPedido && mesActual < mesPedido) {
+                                return true;
+                            } else if (yearActual == yearPedido && mesActual == mesPedido) {
+                                return diaActual < diaPedido;
+                            } else {
+                                return false;
+                            }
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -120,8 +128,7 @@ public class PedidoRepository {
                             int diaPedido = calPedido.get(Calendar.DAY_OF_MONTH);
                             int diaActual = calActual.get(Calendar.DAY_OF_MONTH);
 
-                            return yearPedido <= yearActual && mesPedido <= mesActual && diaPedido < diaActual;
-
+                            return yearActual == yearPedido && mesActual == mesPedido && diaActual == diaPedido;
                         } catch (ParseException e) {
                             e.printStackTrace();
                             System.out.println("Error");
@@ -163,8 +170,15 @@ public class PedidoRepository {
                             int diaPedido = calPedido.get(Calendar.DAY_OF_MONTH);
                             int diaActual = calActual.get(Calendar.DAY_OF_MONTH);
 
-                            return yearActual == yearPedido && mesActual == mesPedido && diaActual == diaPedido;
-
+                            if (yearActual > yearPedido) {
+                                return true;
+                            } else if (yearActual == yearPedido && mesActual > mesPedido) {
+                                return true;
+                            } else if (yearActual == yearPedido && mesActual == mesPedido) {
+                                return diaActual > diaPedido;
+                            } else {
+                                return false;
+                            }
                         } catch (ParseException e) {
                             e.printStackTrace();
                             System.out.println("Error");
@@ -178,6 +192,20 @@ public class PedidoRepository {
         return pedidosFiltrados;
     }
 
+    /** Obtiene el plato por su nombre
+     * @return plato
+     */
+    public Pedido getPedidoByNombre(String cliente){
+        Future<Pedido> pedido = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPedidoDao.getPedidoByNombre(cliente));
+
+
+
+        try {
+            return pedido.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+    }
 
     private boolean comprobarPedido(Pedido pedido) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy/HH:mm");
