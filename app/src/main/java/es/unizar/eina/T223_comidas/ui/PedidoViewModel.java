@@ -19,20 +19,32 @@ public class PedidoViewModel extends AndroidViewModel {
     private final LiveData<List<Pedido>> mAllPedidosMovil;
     private final LiveData<List<Pedido>> mAllPedidosFecha;
     private final LiveData<List<Pedido>> mAllPedidosEstado;
+    private final LiveData<List<Pedido>> mAllPedidosPrevistos;
+    private final LiveData<List<Pedido>> mAllPedidosVigentes;
+    private final LiveData<List<Pedido>> mAllPedidosCaducados;
+
 
     public PedidoViewModel(Application application) {
         super(application);
         mRepository = new PedidoRepository(application);
+
         mAllPedidosCliente = mRepository.getAllPedidosByCliente();
         mAllPedidosMovil = mRepository.getAllPedidosByMovil();
         mAllPedidosFecha = mRepository.getAllPedidosByFecha();
         mAllPedidosEstado = mRepository.getAllPedidosByEstado();
+
+        mAllPedidosPrevistos = mRepository.getAllPedidosPrevistos();
+        mAllPedidosVigentes = mRepository.getAllPedidosVigentes();
+        mAllPedidosCaducados = mRepository.getAllPedidosCaducados();
     }
 
     LiveData<List<Pedido>> getAllPedidosByCliente() { return mAllPedidosCliente; }
     LiveData<List<Pedido>> getAllPedidosByMovil() { return mAllPedidosMovil; }
     LiveData<List<Pedido>> getAllPedidosByFecha() { return mAllPedidosFecha; }
     LiveData<List<Pedido>> getAllPedidosByEstado() { return mAllPedidosEstado; }
+    LiveData<List<Pedido>> getAllPedidosPrevistos() { return mAllPedidosPrevistos; }
+    LiveData<List<Pedido>> getAllPedidosVigentes() { return mAllPedidosVigentes; }
+    LiveData<List<Pedido>> getAllPedidosCaducados() { return mAllPedidosCaducados; }
 
     public long insert(Pedido pedido) { return mRepository.insert(pedido); }
 

@@ -117,16 +117,9 @@ public class Pedidos extends AppCompatActivity {
     }
 
     private void createPedido() {
-        int numPedidos = mPedidoViewModel.getNumeroDePedidos();
-        if(numPedidos < 2000) {
-            Intent intent = new Intent(this, PedidoEdit.class);
-            PedidoEdit.mPedidos = new MapaPedidos(mCantidadViewModel, 0);
-            startActivity(intent);
-        }
-        else{
-            Toast.makeText(getApplicationContext(), "Se ha alcanzado el máximo de pedidos",
-                    Toast.LENGTH_LONG).show();
-        }
+        Intent intent = new Intent(this, PedidoEdit.class);
+        PedidoEdit.mPedidos = new MapaPedidos(mCantidadViewModel, 0);
+        startActivity(intent);
     }
 
     public PedidoRepository getPedidoRepository() {
