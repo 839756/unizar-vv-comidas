@@ -40,7 +40,7 @@
             android:inputType="textAutoComplete"
             android:minHeight="@dimen/min_height"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
 
     </LinearLayout>

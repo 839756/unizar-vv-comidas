@@ -4,6 +4,7 @@ package es.unizar.eina.T223_comidas.database;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 public class PedidoRepository {
 
@@ -47,6 +49,161 @@ public class PedidoRepository {
         return mAllPedidosByEstado;
     }
 
+    public LiveData<List<es.unizar.eina.T223_comidas.database.Pedido>> getAllPedidosPrevistos() {
+        MutableLiveData<List<Pedido>> pedidosFiltrados = new MutableLiveData<>();
+        mAllPedidosByCliente.observeForever(pedidos -> {
+            List<Pedido> listaFiltrada = (List<Pedido>) pedidos.stream()
+                    .filter(pedido -> {
+                        try {
+                            // Fecha del pedido
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy/HH:mm");
+                            Date fechaPedido = sdf.parse(pedido.getFecha());
+
+                            Calendar calPedido = Calendar.getInstance();
+                            calPedido.setTime(fechaPedido);
+
+                            // Fecha actual
+                            Date fechaActual = new Date(); // Fecha y hora actual
+
+                            Calendar calActual = Calendar.getInstance();
+                            calActual.setTime(fechaActual);
+
+                            int yearPedido = calPedido.get(Calendar.YEAR);
+                            int yearActual = calActual.get(Calendar.YEAR);
+
+                            int mesPedido = calPedido.get(Calendar.MONTH);
+                            int mesActual = calActual.get(Calendar.MONTH);
+
+                            int diaPedido = calPedido.get(Calendar.DAY_OF_MONTH);
+                            int diaActual = calActual.get(Calendar.DAY_OF_MONTH);
+
+                            if (yearActual < yearPedido) {
+                                return true;
+                            } else if (yearActual == yearPedido && mesActual < mesPedido) {
+                                return true;
+                            } else if (yearActual == yearPedido && mesActual == mesPedido) {
+                                return diaActual < diaPedido;
+                            } else {
+                                return false;
+                            }
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            System.out.println("Error");
+                            return false;
+                        }
+                    }).collect(Collectors.toList());
+            pedidosFiltrados.setValue(listaFiltrada);
+
+        });
+        System.out.println(pedidosFiltrados);
+        return pedidosFiltrados;
+    }
+
+    public LiveData<List<es.unizar.eina.T223_comidas.database.Pedido>> getAllPedidosVigentes() {
+        MutableLiveData<List<Pedido>> pedidosFiltrados = new MutableLiveData<>();
+        mAllPedidosByCliente.observeForever(pedidos -> {
+            List<Pedido> listaFiltrada = (List<Pedido>) pedidos.stream()
+                    .filter(pedido -> {
+                        try {
+                            // Fecha del pedido
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy/HH:mm");
+                            Date fechaPedido = sdf.parse(pedido.getFecha());
+
+                            Calendar calPedido = Calendar.getInstance();
+                            calPedido.setTime(fechaPedido);
+
+                            // Fecha actual
+                            Date fechaActual = new Date(); // Fecha y hora actual
+
+                            Calendar calActual = Calendar.getInstance();
+                            calActual.setTime(fechaActual);
+
+                            int yearPedido = calPedido.get(Calendar.YEAR);
+                            int yearActual = calActual.get(Calendar.YEAR);
+
+                            int mesPedido = calPedido.get(Calendar.MONTH);
+                            int mesActual = calActual.get(Calendar.MONTH);
+
+                            int diaPedido = calPedido.get(Calendar.DAY_OF_MONTH);
+                            int diaActual = calActual.get(Calendar.DAY_OF_MONTH);
+
+                            return yearActual == yearPedido && mesActual == mesPedido && diaActual == diaPedido;
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            System.out.println("Error");
+                            return false;
+                        }
+                    }).collect(Collectors.toList());
+            pedidosFiltrados.setValue(listaFiltrada);
+
+        });
+        System.out.println(pedidosFiltrados);
+        return pedidosFiltrados;
+    }
+
+    public LiveData<List<es.unizar.eina.T223_comidas.database.Pedido>> getAllPedidosCaducados() {
+        MutableLiveData<List<Pedido>> pedidosFiltrados = new MutableLiveData<>();
+        mAllPedidosByCliente.observeForever(pedidos -> {
+            List<Pedido> listaFiltrada = (List<Pedido>) pedidos.stream()
+                    .filter(pedido -> {
+                        try {
+                            // Fecha del pedido
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy/HH:mm");
+                            Date fechaPedido = sdf.parse(pedido.getFecha());
+
+                            Calendar calPedido = Calendar.getInstance();
+                            calPedido.setTime(fechaPedido);
+
+                            // Fecha actual
+                            Date fechaActual = new Date(); // Fecha y hora actual
+
+                            Calendar calActual = Calendar.getInstance();
+                            calActual.setTime(fechaActual);
+
+                            int yearPedido = calPedido.get(Calendar.YEAR);
+                            int yearActual = calActual.get(Calendar.YEAR);
+
+                            int mesPedido = calPedido.get(Calendar.MONTH);
+                            int mesActual = calActual.get(Calendar.MONTH);
+
+                            int diaPedido = calPedido.get(Calendar.DAY_OF_MONTH);
+                            int diaActual = calActual.get(Calendar.DAY_OF_MONTH);
+
+                            if (yearActual > yearPedido) {
+                                return true;
+                            } else if (yearActual == yearPedido && mesActual > mesPedido) {
+                                return true;
+                            } else if (yearActual == yearPedido && mesActual == mesPedido) {
+                                return diaActual > diaPedido;
+                            } else {
+                                return false;
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            System.out.println("Error");
+                            return false;
+                        }
+                    }).collect(Collectors.toList());
+            pedidosFiltrados.setValue(listaFiltrada);
+
+        });
+        System.out.println(pedidosFiltrados);
+        return pedidosFiltrados;
+    }
+
+    /** Obtiene el plato por su nombre
+     * @return plato
+     */
+    public Pedido getPedidoByNombre(String cliente){
+        Future<Pedido> pedido = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPedidoDao.getPedidoByNombre(cliente));
+
+        try {
+            return pedido.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+    }
 
     private boolean comprobarPedido(Pedido pedido) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy/HH:mm");
@@ -70,7 +227,7 @@ public class PedidoRepository {
         return Objects.equals(pedido.getCliente(), "") || fechaNoValida ||
                 Integer.toString(pedido.getMovil()).length() != 9 ||
                 (!Objects.equals(pedido.getEstado(), "SOLICITADO") && !Objects.equals(pedido.getEstado(), "PREPARADO") &&
-                        !Objects.equals(pedido.getEstado(), "RECOGIDO"));  
+                        !Objects.equals(pedido.getEstado(), "RECOGIDO"));
     }
 
 
@@ -111,9 +268,9 @@ public class PedidoRepository {
                 return pedidoActualizado.get();
             } catch (InterruptedException | ExecutionException e) {
                 return 0;
+            }
         }
-        }
-        
+
     }
 
     /** Elimina un pedido
@@ -147,4 +304,5 @@ public class PedidoRepository {
             return -1;
         }
     }
+
 }

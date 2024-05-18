@@ -67,6 +67,14 @@ public class PlatoListAdapter extends ListAdapter<Plato, PlatoViewHolder> {
             }
         });
 
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                setPosition(holder.getAdapterPosition());
+                return false;
+            }
+        });
+
         Button closeButton = holder.itemView.findViewById(R.id.closeButton);
 
         closeButton.setOnClickListener(new View.OnClickListener() {

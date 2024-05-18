@@ -8,9 +8,13 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.List;
+
 import es.unizar.eina.T223_comidas.R;
+import es.unizar.eina.T223_comidas.database.Pedido;
 
 public class OrdenarPedidos extends DialogFragment {
 
@@ -36,6 +40,10 @@ public class OrdenarPedidos extends DialogFragment {
         Button buttonFilterByFecha = view.findViewById(R.id.buttonFilterByFecha);
         Button buttonFilterByEstado = view.findViewById(R.id.buttonFilterByEstado);
 
+        Button buttonFilterPrevistos = view.findViewById(R.id.buttonFilterByPrevistos);
+        Button buttonFilterVigentes = view.findViewById(R.id.buttonFilterByVigentes);
+        Button buttonFilterCaducados = view.findViewById(R.id.buttonFilterByCaducados);
+
         buttonFilterByCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +57,8 @@ public class OrdenarPedidos extends DialogFragment {
         buttonFilterByMovil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 mPedidoViewModel.getAllPedidosByMovil().observe(pedidosContext, pedidos -> {
                     mAdapter.submitList(pedidos);
                 });
@@ -76,6 +86,37 @@ public class OrdenarPedidos extends DialogFragment {
             }
         });
 
+        buttonFilterPrevistos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPedidoViewModel.getAllPedidosPrevistos().observe(pedidosContext, pedidos -> {
+                    mAdapter.submitList(pedidos);
+                });
+                dismiss();
+
+            }
+        });
+
+        buttonFilterVigentes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPedidoViewModel.getAllPedidosVigentes().observe(pedidosContext, pedidos -> {
+                    mAdapter.submitList(pedidos);
+                });
+                dismiss();
+
+            }
+        });
+
+        buttonFilterCaducados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPedidoViewModel.getAllPedidosCaducados().observe(pedidosContext, pedidos -> {
+                    mAdapter.submitList(pedidos);
+                });
+                dismiss();
+            }
+        });
 
         builder.setView(view);
 

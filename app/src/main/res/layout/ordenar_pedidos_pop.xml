@@ -44,7 +44,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ordenar por estado"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
 
+    <Button
+        android:id="@+id/buttonFilterByPrevistos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pedidos previstos"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonFilterByVigentes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pedidos vigentes"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonFilterByCaducados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pedidos caducados"
+        android:textSize="18sp"/>
 
 </LinearLayout>

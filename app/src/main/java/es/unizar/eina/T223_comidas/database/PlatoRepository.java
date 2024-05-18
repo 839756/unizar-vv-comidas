@@ -111,6 +111,20 @@ public class PlatoRepository {
         }
     }
 
+
+    /** Obtiene el plato por su nombre
+     * @return plato
+     */
+    public Plato getPlatoByNombre(String nombre){
+        Future<Plato> plato = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPlatoDao.getPlatoByNombre(nombre));
+
+        try {
+            return plato.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+    }
+
     /** Obtiene el numero de platos
      * @return numero de platos de la BD
      */
