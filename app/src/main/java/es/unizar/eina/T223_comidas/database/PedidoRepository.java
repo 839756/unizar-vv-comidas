@@ -198,8 +198,6 @@ public class PedidoRepository {
     public Pedido getPedidoByNombre(String cliente){
         Future<Pedido> pedido = ComidasRoomDatabase.databaseWriteExecutor.submit(() -> mPedidoDao.getPedidoByNombre(cliente));
 
-
-
         try {
             return pedido.get();
         } catch (InterruptedException | ExecutionException e) {
@@ -306,4 +304,5 @@ public class PedidoRepository {
             return -1;
         }
     }
+
 }

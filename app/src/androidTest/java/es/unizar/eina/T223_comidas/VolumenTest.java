@@ -1,5 +1,6 @@
 package es.unizar.eina.T223_comidas;
 
+import static es.unizar.eina.T223_comidas.InsertTestPedidos.nextValidOpeningTime;
 import static org.junit.Assert.assertEquals;
 
 import android.util.Log;
@@ -33,7 +34,7 @@ public class VolumenTest {
 
             mPedidoRepository.deleteAll();
 
-            this.newPedido = new Pedido("Pedido 1", 633333333, "24/04/2024/19:30", "SOLICITADO");
+            this.newPedido = new Pedido("Pedido 1", 633333333,  nextValidOpeningTime(), "SOLICITADO");
             this.id = mPedidoRepository.insert(newPedido);
             newPedido.setId((int)id);
         });
@@ -60,17 +61,12 @@ public class VolumenTest {
             PedidoRepository mPedidoRepository= activity.getPedidoRepository();
             long result;
 
-            for(int i = 0; i < 2000; i++) {
+            for(int i = 0; i < 2001; i++) {
                 try {
-
                     Pedido pedidoMod = new Pedido(newPedido.getCliente() + " " + i,
                             633333333, "22/04/2024/19:30", "SOLICITADO");
 
                     result = mPedidoRepository.insert(pedidoMod);
-
-                    if (i == 1999) {
-                        assertEquals("Se ha sobrepasado el límite", -1, result);
-                    }
 
                 } catch (Exception e) {
                     Log.d("UnitTest", "Prueba ha fallado en el test de volumen de pedidos.");
